@@ -1,29 +1,42 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import './App.css';
 import {Map, Marker, GoogleApiWrapper, InfoWindow} from 'google-maps-react';
 import axios from 'axios'
 import CSS from 'csstype';
 
-const sampleLocation = {lat: 49.246292, lng: -123.116226};
-
 const mapStyles: CSS.Properties = {
-  width: '600px',
-  height: '500px'
+  // height: '80%'
+  marginTop: '2rem'
 };
-
-
 
 class App extends Component<any, any> {
   constructor(props: any) {
     super(props);
  
     this.state = {
+      inputLat: null,
+      inputLng: null,
+      sampleLocation: {lat: 49.246292, lng: -123.116226},
       items: [],
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
       map: {}
     };
+
+    this.publish = this.publish.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange({ target }) {
+    this.setState({
+      [target.name]: target.value
+    });
+  }
+
+  publish() {
+    // console.log( this.state.inputLat, this.state.inputLng );
+    this.initiateSearch(this.state.inputLat, this.state.inputLng);
   }
 
   onMarkerClick = (props: any, marker: any, e: any) =>
@@ -32,9 +45,9 @@ class App extends Component<any, any> {
       activeMarker: marker,
       showingInfoWindow: true
     });
-
+    
   componentDidMount() {
-   axios.get(`https://stg-services.benchapp.com/v1/free-agents?radius=99&longitude=${sampleLocation.lng}&latitude=${sampleLocation.lat}&sport=HOCKEY`)
+   axios.get(`https://stg-services.benchapp.com/v1/free-agents?radius=10&longitude=${this.state.sampleLocation.lng}&latitude=${this.state.sampleLocation.lat}&sport=HOCKEY`)
       .then(res => {
         this.setState({
           items: res.data.map(item => ({
@@ -42,42 +55,79 @@ class App extends Component<any, any> {
             longitude: item.longitude,
             player: item.player,
             id: item.id
-          }))
+          })),
         });
       })
       .catch(error => console.log(error));
-    }
+  }
 
+  initiateSearch(lat, lng) {
+    // this.setState({sampleLocation: {lat, lng}})
+    axios.get(`https://stg-services.benchapp.com/v1/free-agents?radius=10&longitude=${lng}&latitude=${lat}&sport=HOCKEY`)
+      .then(res => {
+        this.setState({
+          items: res.data.map(item => ({
+            latitude: item.latitude,
+            longitude: item.longitude,
+            player: item.player,
+            id: item.id
+          })),
+          sampleLocation: {lat, lng}
+        });
+      })
+      .catch(error => console.log(error));
+  }
 
   render() {
     return (
+      <div>
 
+      <input 
+        type="text" 
+        name="inputLat" 
+        placeholder="Latitude" 
+        value={ this.state.inputLat }
+        onChange={ this.handleChange } 
+      />
       
-      <Map style={mapStyles} initialCenter={sampleLocation} google={this.props.google}   
-      onReady={(mapProps, map) => {
-        this.setState({ map: map as google.maps.Map})
-      }}>
- 
+      <input 
+        type="text" 
+        name="inputLng" 
+        placeholder="Longitude"
+        value={ this.state.inputLng } 
+        onChange={ this.handleChange } 
+      />
+      
+      <button value="Send" onClick={ this.publish }>Update</button>
 
-        {this.state.items.map(hit =>
-          <Marker
-            key={hit.id}
-            onClick={this.onMarkerClick}
-            title={hit.player?.name ?? 'No Name'}
-            position={{lat: hit.latitude, lng: hit.longitude}} 
-          />
-         )}
-          
-            <InfoWindow
-              google={this.props.google}
-              map={this.state.map as google.maps.Map}
-              marker={this.state.activeMarker}
-              visible={this.state.showingInfoWindow}>
-                <div>
-                  <h1>{this.state.selectedPlace.title}</h1>
-                </div>
-            </InfoWindow>
-      </Map>
+        {/* <button onClick={() => this.initiateSearch(49.246292,-123.116226)}>Click Me!</button> */}
+
+        <Map style={mapStyles} center={this.state.sampleLocation} initialCenter={this.state.sampleLocation} google={this.props.google}   
+        onReady={(mapProps, map) => {
+          this.setState({ map: map as google.maps.Map})
+        }}>
+  
+
+          {this.state.items.map(hit =>
+            <Marker
+              key={hit.id}
+              onClick={this.onMarkerClick}
+              title={hit.player?.name ?? 'No Name'}
+              position={{lat: hit.latitude, lng: hit.longitude}} 
+            />
+          )}
+            
+              <InfoWindow
+                google={this.props.google}
+                map={this.state.map as google.maps.Map}
+                marker={this.state.activeMarker}
+                visible={this.state.showingInfoWindow}>
+                  <div>
+                    <h1>{this.state.selectedPlace.title}</h1>
+                  </div>
+              </InfoWindow>
+        </Map>
+      </div>
     );
   }
 }

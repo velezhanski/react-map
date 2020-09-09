@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import React from 'react';
+import GoogleApiWrapper from './App';
 
 type PersonScore = {
   name: string;
