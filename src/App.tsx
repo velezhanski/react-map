@@ -45,7 +45,7 @@ class App extends Component<any, any> {
     });
     
   componentDidMount() {
-   axios.get(`https://stg-services.benchapp.com/v1/free-agents?radius=10&longitude=${this.state.sampleLocation.lng}&latitude=${this.state.sampleLocation.lat}&sport=HOCKEY`)
+   axios.get(`https://stg-services.benchapp.com/v1/free-agents?radius=100&longitude=${this.state.sampleLocation.lng}&latitude=${this.state.sampleLocation.lat}&sport=HOCKEY`)
       .then(res => {
         this.setState({
           items: res.data.map(item => ({
@@ -60,7 +60,7 @@ class App extends Component<any, any> {
   }
 
   initiateSearch(lat, lng) {
-    axios.get(`https://stg-services.benchapp.com/v1/free-agents?radius=10&longitude=${lng}&latitude=${lat}&sport=HOCKEY`)
+    axios.get(`https://stg-services.benchapp.com/v1/free-agents?radius=100&longitude=${lng}&latitude=${lat}&sport=HOCKEY`)
       .then(res => {
         this.setState({
           items: res.data.map(item => ({
