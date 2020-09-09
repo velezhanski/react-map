@@ -24,7 +24,7 @@ class App extends Component {
     });
 
   componentDidMount() {
-    fetch(`https://stg-services.benchapp.com/v1/free-agents?radius=10&longitude=${sampleLocation.lng}&latitude=${sampleLocation.lat}&sport=HOCKEY`)
+    fetch(`https://stg-services.benchapp.com/v1/free-agents?radius=3&longitude=${sampleLocation.lng}&latitude=${sampleLocation.lat}&sport=HOCKEY`)
       .then(response => {
         return response.json();
       })
