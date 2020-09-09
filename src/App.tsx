@@ -1,11 +1,10 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import {Map, Marker, GoogleApiWrapper, InfoWindow} from 'google-maps-react';
 import axios from 'axios'
 import CSS from 'csstype';
 
 const mapStyles: CSS.Properties = {
-  // height: '80%'
   marginTop: '2rem'
 };
 
@@ -35,7 +34,6 @@ class App extends Component<any, any> {
   }
 
   publish() {
-    // console.log( this.state.inputLat, this.state.inputLng );
     this.initiateSearch(this.state.inputLat, this.state.inputLng);
   }
 
@@ -62,7 +60,6 @@ class App extends Component<any, any> {
   }
 
   initiateSearch(lat, lng) {
-    // this.setState({sampleLocation: {lat, lng}})
     axios.get(`https://stg-services.benchapp.com/v1/free-agents?radius=10&longitude=${lng}&latitude=${lat}&sport=HOCKEY`)
       .then(res => {
         this.setState({
@@ -99,8 +96,6 @@ class App extends Component<any, any> {
       />
       
       <button value="Send" onClick={ this.publish }>Update</button>
-
-        {/* <button onClick={() => this.initiateSearch(49.246292,-123.116226)}>Click Me!</button> */}
 
         <Map style={mapStyles} center={this.state.sampleLocation} initialCenter={this.state.sampleLocation} google={this.props.google}   
         onReady={(mapProps, map) => {
