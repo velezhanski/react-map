@@ -4,7 +4,6 @@ import {Map, Marker, GoogleApiWrapper, InfoWindow} from 'google-maps-react';
 import axios from 'axios'
 
 const sampleLocation = {lat: 49.246292, lng: -123.116226};
-const noname = "No Name";
 
 class App extends Component<any, any> {
   constructor(props: any) {
