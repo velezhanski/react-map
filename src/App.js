@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import {Map, Marker, GoogleApiWrapper, onMarkerClick, InfoWindow} from 'google-maps-react';
+import {Map, Marker, GoogleApiWrapper, InfoWindow} from 'google-maps-react';
  
 const sampleLocation = {lat: 49.246292, lng: -123.116226};
 
@@ -33,7 +33,8 @@ class App extends Component {
           items: data.map(item => ({
             latitude: item.latitude,
             longitude: item.longitude,
-            player: item.player
+            player: item.player,
+            id: item.id
           }))
         });
       })
@@ -41,12 +42,12 @@ class App extends Component {
 
 
   render() {
-    const { hits } = this.state;
     return (
       <Map initialCenter={sampleLocation} google={this.props.google} zoom={14}>
  
         {this.state.items.map(hit =>
           <Marker
+          key={hit.id}
             onClick={this.onMarkerClick}
             name={hit.player.name}
             position={{lat: hit.latitude, lng: hit.longitude}} 
