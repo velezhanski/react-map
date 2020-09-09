@@ -2,8 +2,16 @@ import React, { Component } from 'react';
 import './App.css';
 import {Map, Marker, GoogleApiWrapper, InfoWindow} from 'google-maps-react';
 import axios from 'axios'
+import CSS from 'csstype';
 
 const sampleLocation = {lat: 49.246292, lng: -123.116226};
+
+const mapStyles: CSS.Properties = {
+  width: '600px',
+  height: '500px'
+};
+
+
 
 class App extends Component<any, any> {
   constructor(props: any) {
@@ -38,13 +46,14 @@ class App extends Component<any, any> {
         });
       })
       .catch(error => console.log(error));
-
     }
 
 
   render() {
     return (
-      <Map initialCenter={sampleLocation} google={this.props.google}   
+
+      
+      <Map style={mapStyles} initialCenter={sampleLocation} google={this.props.google}   
       onReady={(mapProps, map) => {
         this.setState({ map: map as google.maps.Map})
       }}>
