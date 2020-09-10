@@ -71,7 +71,7 @@ class App extends Component<any, any> {
 
   initiateSearch(lat, lng) {
     console.log(lat, lng)
-    axios.get(`https://stg-services.benchapp.com/v1/free-agents?radius=100&longitude=${lng}&latitude=${lat}&sport=HOCKEY`)
+    axios.get(`https://stg-services.benchapp.com/v1/free-agents?radius=10000000000&longitude=${lng}&latitude=${lat}&sport=HOCKEY`)
       .then(res => {
         this.setState({
           items: res.data.map(item => ({

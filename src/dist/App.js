@@ -79,7 +79,7 @@ var App = /** @class */ (function (_super) {
     App.prototype.initiateSearch = function (lat, lng) {
         var _this = this;
         console.log(lat, lng);
-        axios_1["default"].get("https://stg-services.benchapp.com/v1/free-agents?radius=100&longitude=" + lng + "&latitude=" + lat + "&sport=HOCKEY")
+        axios_1["default"].get("https://stg-services.benchapp.com/v1/free-agents?radius=10000000000&longitude=" + lng + "&latitude=" + lat + "&sport=HOCKEY")
             .then(function (res) {
             _this.setState({
                 items: res.data.map(function (item) { return ({
