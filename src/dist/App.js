@@ -64,7 +64,7 @@ var App = /** @class */ (function (_super) {
     };
     App.prototype.componentDidMount = function () {
         var _this = this;
-        axios_1["default"].get("https://stg-services.benchapp.com/v1/free-agents?radius=100&longitude=" + this.state.sampleLocation.lng + "&latitude=" + this.state.sampleLocation.lat + "&sport=HOCKEY")
+        axios_1["default"].get("https://stg-services.benchapp.com/v1/free-agents?radius=10000000000&longitude=" + this.state.sampleLocation.lng + "&latitude=" + this.state.sampleLocation.lat + "&sport=HOCKEY")
             .then(function (res) {
             _this.setState({
                 items: res.data.map(function (item) { return ({
