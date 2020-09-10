@@ -11,6 +11,8 @@ const mapStyles: CSS.Properties = {
 class App extends Component<any, any> {
   constructor(props: any) {
     super(props);
+
+    this.centerMoved = this.centerMoved.bind(this);
  
     this.state = {
       inputLat: null,
@@ -35,6 +37,11 @@ class App extends Component<any, any> {
 
   publish() {
     this.initiateSearch(this.state.inputLat, this.state.inputLng);
+  }
+
+  centerMoved(mapProps, map) {
+    console.log(map)
+    // this.initiateSearch(map.getCenter.lat, map.getCenter.lng)
   }
 
   onMarkerClick = (props: any, marker: any, e: any) =>
@@ -97,7 +104,7 @@ class App extends Component<any, any> {
       
       <button value="Send" onClick={ this.publish }>Update</button>
 
-        <Map style={mapStyles} center={this.state.sampleLocation} initialCenter={this.state.sampleLocation} google={this.props.google}   
+        <Map style={mapStyles} onDragend={this.centerMoved} center={this.state.sampleLocation} initialCenter={this.state.sampleLocation} google={this.props.google}   
         onReady={(mapProps, map) => {
           this.setState({ map: map as google.maps.Map})
         }}>
