@@ -15,7 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 exports.__esModule = true;
 var react_1 = require("react");
 var App_1 = require("../styles/App");
-var google_maps_react_1 = require("google-maps-react");
+var google_maps_react_velez_1 = require("google-maps-react-velez");
 var GoogleMap = /** @class */ (function (_super) {
     __extends(GoogleMap, _super);
     function GoogleMap(props) {
@@ -23,18 +23,18 @@ var GoogleMap = /** @class */ (function (_super) {
     }
     GoogleMap.prototype.render = function () {
         var _this = this;
-        return react_1["default"].createElement(google_maps_react_1.Map, { style: App_1.mapStyles, zoom: 15, 
+        return react_1["default"].createElement(google_maps_react_velez_1.Map, { style: App_1.mapStyles, zoom: 15, 
             // onDragend={this.centerMoved} 
             center: this.state.sampleLocation, initialCenter: this.state.sampleLocation, google: this.props.google, onReady: function (mapProps, map) {
                 _this.setState({ map: map });
             } },
             this.state.items.map(function (hit) {
                 var _a, _b;
-                return react_1["default"].createElement(google_maps_react_1.Marker, { key: hit.id, 
+                return react_1["default"].createElement(google_maps_react_velez_1.Marker, { key: hit.id, 
                     // onClick={this.onMarkerClick}
                     title: (_b = (_a = hit.player) === null || _a === void 0 ? void 0 : _a.name) !== null && _b !== void 0 ? _b : 'No Name', position: { lat: hit.latitude, lng: hit.longitude } });
             }),
-            react_1["default"].createElement(google_maps_react_1.InfoWindow, { google: this.props.google, map: this.state.map, marker: this.state.activeMarker, visible: this.state.showingInfoWindow },
+            react_1["default"].createElement(google_maps_react_velez_1.InfoWindow, { google: this.props.google, map: this.state.map, marker: this.state.activeMarker, visible: this.state.showingInfoWindow },
                 react_1["default"].createElement("div", null,
                     react_1["default"].createElement("h1", null, this.state.selectedPlace.title))));
     };

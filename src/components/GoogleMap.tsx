@@ -1,6 +1,6 @@
 import React from 'react';
 import {mapStyles} from '../styles/App';
-import {Map, Marker, InfoWindow} from 'google-maps-react';
+import {Map, Marker, InfoWindow} from 'google-maps-react-velez';
 
 export default class GoogleMap extends React.Component<any, any> {
   constructor(props) {

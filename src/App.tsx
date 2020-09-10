@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Map, Marker, GoogleApiWrapper, InfoWindow} from 'google-maps-react';
+import {Map, Marker, GoogleApiWrapper, InfoWindow} from 'google-maps-react-velez';
 import {mapStyles} from './styles/App';
 import CoordinatesSubmitForm from "./components/CoordinatesSubmitForm";
 import {UpdateMap} from "./api/UpdateMap";
@@ -18,7 +18,7 @@ class App extends Component<any, any> {
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
-      map: {}
+      map: {},
     };
   }
 

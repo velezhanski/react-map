@@ -23,7 +23,4 @@
   "include": [
     "src"
   ],
-  "types": [
-    "react-google-maps"
-  ]
 }

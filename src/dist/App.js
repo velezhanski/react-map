@@ -50,7 +50,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 var react_1 = require("react");
-var google_maps_react_1 = require("google-maps-react");
+var google_maps_react_velez_1 = require("google-maps-react-velez");
 var App_1 = require("./styles/App");
 var CoordinatesSubmitForm_1 = require("./components/CoordinatesSubmitForm");
 var UpdateMap_1 = require("./api/UpdateMap");
@@ -82,14 +82,14 @@ var App = /** @class */ (function (_super) {
         var _this = this;
         return (react_1["default"].createElement("div", null,
             react_1["default"].createElement(CoordinatesSubmitForm_1["default"], { onFormSubmitted: this.initiateSearch }),
-            react_1["default"].createElement(google_maps_react_1.Map, { style: App_1.mapStyles, zoom: 15, onDragend: this.centerMoved, center: this.state.sampleLocation, initialCenter: this.state.sampleLocation, google: this.props.google, onReady: function (mapProps, map) {
+            react_1["default"].createElement(google_maps_react_velez_1.Map, { style: App_1.mapStyles, zoom: 15, onDragend: this.centerMoved, center: this.state.sampleLocation, initialCenter: this.state.sampleLocation, google: this.props.google, onReady: function (mapProps, map) {
                     _this.setState({ map: map });
                 } },
                 this.state.items.map(function (hit) {
                     var _a, _b;
-                    return react_1["default"].createElement(google_maps_react_1.Marker, { key: hit.id, onClick: _this.onMarkerClick, title: (_b = (_a = hit.player) === null || _a === void 0 ? void 0 : _a.name) !== null && _b !== void 0 ? _b : 'No Name', position: { lat: hit.latitude, lng: hit.longitude } });
+                    return react_1["default"].createElement(google_maps_react_velez_1.Marker, { key: hit.id, onClick: _this.onMarkerClick, title: (_b = (_a = hit.player) === null || _a === void 0 ? void 0 : _a.name) !== null && _b !== void 0 ? _b : 'No Name', position: { lat: hit.latitude, lng: hit.longitude } });
                 }),
-                react_1["default"].createElement(google_maps_react_1.InfoWindow, { google: this.props.google, map: this.state.map, marker: this.state.activeMarker, visible: this.state.showingInfoWindow },
+                react_1["default"].createElement(google_maps_react_velez_1.InfoWindow, { google: this.props.google, map: this.state.map, marker: this.state.activeMarker, visible: this.state.showingInfoWindow },
                     react_1["default"].createElement("div", null,
                         react_1["default"].createElement("h1", null, this.state.selectedPlace.title))))));
     };
@@ -130,6 +130,6 @@ var App = /** @class */ (function (_super) {
     };
     return App;
 }(react_1.Component));
-exports["default"] = google_maps_react_1.GoogleApiWrapper({
+exports["default"] = google_maps_react_velez_1.GoogleApiWrapper({
     apiKey: ('AIzaSyAogKkKTwajFfVxTfJ1xHJedhn-8xO6Psg')
 })(App);
