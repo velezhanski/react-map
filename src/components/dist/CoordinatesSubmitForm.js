@@ -44,7 +44,6 @@ var CoordinatesSubmitForm = /** @class */ (function (_super) {
     };
     CoordinatesSubmitForm.prototype.handleFormSubmission = function (event) {
         event.preventDefault();
-        console.log("Hi");
         if (this.state.latitude === 0 || this.state.longitude === 0) {
             return;
         }

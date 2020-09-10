@@ -46,7 +46,6 @@ export default class CoordinatesSubmitForm extends React.Component<any, ICoordin
 
   handleFormSubmission(event) {
     event.preventDefault();
-    console.log("Hi")
 
     if (this.state.latitude === 0 || this.state.longitude === 0) {
       return;
