@@ -4,16 +4,16 @@ import {Map, Marker, GoogleApiWrapper, InfoWindow} from 'google-maps-react';
 import axios from 'axios'
 import CSS from 'csstype';
 
+
 const mapStyles: CSS.Properties = {
   marginTop: '2rem'
 };
 
 class App extends Component<any, any> {
+
   constructor(props: any) {
     super(props);
 
-    this.centerMoved = this.centerMoved.bind(this);
- 
     this.state = {
       inputLat: null,
       inputLng: null,
@@ -27,6 +27,7 @@ class App extends Component<any, any> {
 
     this.publish = this.publish.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.centerMoved = this.centerMoved.bind(this);
   }
 
   handleChange({ target }) {
@@ -40,8 +41,10 @@ class App extends Component<any, any> {
   }
 
   centerMoved(mapProps, map) {
-    console.log(map)
-    // this.initiateSearch(map.getCenter.lat, map.getCenter.lng)
+    // console.log('args:', mapProps, map);
+    console.log(map.getCenter().lat());
+    console.log(map.getCenter().lng());
+    this.initiateSearch(map.getCenter().lat(), map.getCenter().lng());
   }
 
   onMarkerClick = (props: any, marker: any, e: any) =>
@@ -67,6 +70,7 @@ class App extends Component<any, any> {
   }
 
   initiateSearch(lat, lng) {
+    console.log(lat, lng)
     axios.get(`https://stg-services.benchapp.com/v1/free-agents?radius=100&longitude=${lng}&latitude=${lat}&sport=HOCKEY`)
       .then(res => {
         this.setState({
@@ -104,7 +108,7 @@ class App extends Component<any, any> {
       
       <button value="Send" onClick={ this.publish }>Update</button>
 
-        <Map style={mapStyles} onDragend={this.centerMoved} center={this.state.sampleLocation} initialCenter={this.state.sampleLocation} google={this.props.google}   
+        <Map style={mapStyles} zoom={15} onDragend={this.centerMoved} center={this.state.sampleLocation} initialCenter={this.state.sampleLocation} google={this.props.google}   
         onReady={(mapProps, map) => {
           this.setState({ map: map as google.maps.Map})
         }}>
