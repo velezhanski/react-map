@@ -14,27 +14,42 @@ var __extends = (this && this.__extends) || (function () {
 })();
 exports.__esModule = true;
 var react_1 = require("react");
-var MessageForm = /** @class */ (function (_super) {
-    __extends(MessageForm, _super);
-    function MessageForm(props) {
+var CoordinatesSubmitForm = /** @class */ (function (_super) {
+    __extends(CoordinatesSubmitForm, _super);
+    function CoordinatesSubmitForm(props) {
         var _this = _super.call(this, props) || this;
-        _this.handleChange = _this.handleChange.bind(_this);
-        _this.state = { latitude: 0, longitude: 0 };
+        _this.handleFormSubmission = _this.handleFormSubmission.bind(_this);
+        _this.handleLatChange = _this.handleLatChange.bind(_this);
+        _this.handleLngChange = _this.handleLngChange.bind(_this);
+        _this.state = { latitude: 40.7128, longitude: -74.0060 };
         return _this;
     }
-    MessageForm.prototype.render = function () {
-        return react_1["default"].createElement("form", null,
-            react_1["default"].createElement("input", { type: "text", name: "inputLat", placeholder: "Latitude", value: this.state.latitude, onChange: this.handleChange }),
-            react_1["default"].createElement("input", { type: "text", name: "inputLng", placeholder: "Longitude", value: this.state.longitude, onChange: this.handleChange }),
-            react_1["default"].createElement("button", { value: "Send", onClick: this.handleChange }, "Update"));
+    CoordinatesSubmitForm.prototype.render = function () {
+        return react_1["default"].createElement("form", { onSubmit: this.handleFormSubmission },
+            react_1["default"].createElement("input", { type: "text", name: "latitude", placeholder: "Latitude", value: this.state.latitude, onChange: this.handleLatChange }),
+            react_1["default"].createElement("input", { type: "text", name: "longitude", placeholder: "Longitude", value: this.state.longitude, onChange: this.handleLngChange }),
+            react_1["default"].createElement("button", { value: "Send", type: "submit" }, "Update"));
     };
-    MessageForm.prototype.handleChange = function (_a) {
+    CoordinatesSubmitForm.prototype.handleLatChange = function (_a) {
         var target = _a.target;
         this.setState({
-            latitude: target.value,
+            latitude: target.value
+        });
+    };
+    CoordinatesSubmitForm.prototype.handleLngChange = function (_a) {
+        var target = _a.target;
+        this.setState({
             longitude: target.value
         });
     };
-    return MessageForm;
+    CoordinatesSubmitForm.prototype.handleFormSubmission = function (event) {
+        event.preventDefault();
+        console.log("Hi");
+        if (this.state.latitude === 0 || this.state.longitude === 0) {
+            return;
+        }
+        this.props.onFormSubmitted(this.state.latitude, this.state.longitude);
+    };
+    return CoordinatesSubmitForm;
 }(react_1["default"].Component));
-exports["default"] = MessageForm;
+exports["default"] = CoordinatesSubmitForm;

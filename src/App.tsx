@@ -1,22 +1,18 @@
 import React, { Component } from 'react';
-import './App.css';
 import {Map, Marker, GoogleApiWrapper, InfoWindow} from 'google-maps-react';
-import axios from 'axios'
-import CSS from 'csstype';
-
-
-const mapStyles: CSS.Properties = {
-  marginTop: '2rem'
-};
+import {mapStyles} from './styles/App';
+import CoordinatesSubmitForm from "./components/CoordinatesSubmitForm";
+import {UpdateMap} from "./api/UpdateMap";
 
 class App extends Component<any, any> {
-
+  updateMap: UpdateMap;
   constructor(props: any) {
     super(props);
+    this.updateMap = new UpdateMap();
+    this.centerMoved = this.centerMoved.bind(this);
+    this.initiateSearch = this.initiateSearch.bind(this);
 
     this.state = {
-      inputLat: null,
-      inputLng: null,
       sampleLocation: {lat: 49.246292, lng: -123.116226},
       items: [],
       showingInfoWindow: false,
@@ -24,89 +20,14 @@ class App extends Component<any, any> {
       selectedPlace: {},
       map: {}
     };
-
-    this.publish = this.publish.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.centerMoved = this.centerMoved.bind(this);
-  }
-
-  handleChange({ target }) {
-    this.setState({
-      [target.name]: target.value
-    });
-  }
-
-  publish() {
-    this.initiateSearch(this.state.inputLat, this.state.inputLng);
-  }
-
-  centerMoved(mapProps, map) {
-    // console.log('args:', mapProps, map);
-    console.log(map.getCenter().lat());
-    console.log(map.getCenter().lng());
-    this.initiateSearch(map.getCenter().lat(), map.getCenter().lng());
-  }
-
-  onMarkerClick = (props: any, marker: any, e: any) =>
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
-    });
-    
-  componentDidMount() {
-   axios.get(`https://stg-services.benchapp.com/v1/free-agents?radius=10000000000&longitude=${this.state.sampleLocation.lng}&latitude=${this.state.sampleLocation.lat}&sport=HOCKEY`)
-      .then(res => {
-        this.setState({
-          items: res.data.map(item => ({
-            latitude: item.latitude,
-            longitude: item.longitude,
-            player: item.player,
-            id: item.id
-          })),
-        });
-      })
-      .catch(error => console.log(error));
-  }
-
-  initiateSearch(lat, lng) {
-    console.log(lat, lng)
-    axios.get(`https://stg-services.benchapp.com/v1/free-agents?radius=10000000000&longitude=${lng}&latitude=${lat}&sport=HOCKEY`)
-      .then(res => {
-        this.setState({
-          items: res.data.map(item => ({
-            latitude: item.latitude,
-            longitude: item.longitude,
-            player: item.player,
-            id: item.id
-          })),
-          sampleLocation: {lat, lng}
-        });
-      })
-      .catch(error => console.log(error));
   }
 
   render() {
     return (
       <div>
-
-      <input 
-        type="text" 
-        name="inputLat" 
-        placeholder="Latitude" 
-        value={ this.state.inputLat }
-        onChange={ this.handleChange } 
-      />
-      
-      <input 
-        type="text" 
-        name="inputLng" 
-        placeholder="Longitude"
-        value={ this.state.inputLng } 
-        onChange={ this.handleChange } 
-      />
-      
-      <button value="Send" onClick={ this.publish }>Update</button>
+        <CoordinatesSubmitForm
+            onFormSubmitted={this.initiateSearch}
+        />
 
         <Map style={mapStyles} zoom={15} onDragend={this.centerMoved} center={this.state.sampleLocation} initialCenter={this.state.sampleLocation} google={this.props.google}   
         onReady={(mapProps, map) => {
@@ -136,8 +57,41 @@ class App extends Component<any, any> {
       </div>
     );
   }
+
+  async initiateSearch(latitude, longitude) {
+    try {
+        const data = await this.updateMap.renderNew(latitude, longitude);
+          this.setState({
+            items: data.map(item => ({
+              latitude: item.latitude,
+              longitude: item.longitude,
+              player: item.player,
+              id: item.id
+            })),
+            sampleLocation: {lat: latitude, lng: longitude}
+          });
+    } catch (e) {
+        console.error("Couldn't updateMap", e)
+    }
+  }
+
+  centerMoved(mapProps, map) {
+    this.initiateSearch(map.getCenter().lat(), map.getCenter().lng());
+  }
+
+  onMarkerClick = (props: any, marker: any, e: any) =>
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
+    
+  componentDidMount() {
+    this.initiateSearch(49.246292, -123.116226)
+  }
+
 }
- 
+
 export default GoogleApiWrapper({
   apiKey: ('AIzaSyAogKkKTwajFfVxTfJ1xHJedhn-8xO6Psg')
 })(App)
