@@ -123,7 +123,12 @@ var App = /** @class */ (function (_super) {
         });
     };
     App.prototype.centerMoved = function (mapProps, map) {
-        this.initiateSearch(map.getCenter().lat(), map.getCenter().lng());
+        var newCords = { lat: map.getCenter().lat(), lng: map.getCenter().lng() };
+        var oldCords = { lat: this.state.sampleLocation.lat, lng: this.state.sampleLocation.lng };
+        var offset = 0.02;
+        if ((newCords.lat > oldCords.lat + offset || newCords.lat < oldCords.lat - offset) || (newCords.lng > oldCords.lng + offset || newCords.lng < oldCords.lng - offset)) {
+            this.initiateSearch(newCords.lat, newCords.lng);
+        }
     };
     App.prototype.componentDidMount = function () {
         this.initiateSearch(49.246292, -123.116226);

@@ -76,7 +76,13 @@ class App extends Component<any, any> {
   }
 
   centerMoved(mapProps, map) {
-    this.initiateSearch(map.getCenter().lat(), map.getCenter().lng());
+    var newCords = {lat: map.getCenter().lat(), lng: map.getCenter().lng()}
+    var oldCords = {lat: this.state.sampleLocation.lat, lng: this.state.sampleLocation.lng}
+    var offset = 0.02
+
+    if ((newCords.lat > oldCords.lat + offset || newCords.lat < oldCords.lat - offset) || (newCords.lng > oldCords.lng + offset || newCords.lng < oldCords.lng - offset )) {
+      this.initiateSearch(newCords.lat, newCords.lng);
+    }
   }
 
   onMarkerClick = (props: any, marker: any, e: any) =>
