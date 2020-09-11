@@ -82,7 +82,7 @@ var App = /** @class */ (function (_super) {
         var _this = this;
         return (react_1["default"].createElement("div", null,
             react_1["default"].createElement(CoordinatesSubmitForm_1["default"], { onFormSubmitted: this.initiateSearch }),
-            react_1["default"].createElement(google_maps_react_velez_1.Map, { style: App_1.mapStyles, zoom: 15, onDragend: this.centerMoved, center: this.state.sampleLocation, initialCenter: this.state.sampleLocation, google: this.props.google, onReady: function (mapProps, map) {
+            react_1["default"].createElement(google_maps_react_velez_1.Map, { minZoom: 14, style: App_1.mapStyles, zoom: 14, onDragend: this.centerMoved, center: this.state.sampleLocation, initialCenter: this.state.sampleLocation, google: this.props.google, onReady: function (mapProps, map) {
                     _this.setState({ map: map });
                 } },
                 this.state.items.map(function (hit) {

@@ -47,7 +47,7 @@ var UpdateMap = /** @class */ (function () {
             var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, axios_1["default"].get(constants_1.API_URL + "radius=10&sport=HOCKEY&latitude=" + latitude + "&longitude=" + longitude)];
+                    case 0: return [4 /*yield*/, axios_1["default"].get(constants_1.API_URL + "radius=" + constants_1.radius + "&sport=HOCKEY&latitude=" + latitude + "&longitude=" + longitude)];
                     case 1:
                         response = _a.sent();
                         return [2 /*return*/, response.data];
