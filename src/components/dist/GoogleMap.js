@@ -86,7 +86,6 @@ var GoogleMap = /** @class */ (function (_super) {
                     react_1["default"].createElement("h1", null, this.state.selectedPlace.title))));
     };
     GoogleMap.prototype.centerMoved = function (mapProps, map) {
-        console.log("triggered");
         var newCords = { lat: map.getCenter().lat(), lng: map.getCenter().lng() };
         var oldCords = { lat: this.state.coordinates.lat, lng: this.state.coordinates.lng };
         if ((newCords.lat > oldCords.lat + constants_1.offset || newCords.lat < oldCords.lat - constants_1.offset) || (newCords.lng > oldCords.lng + constants_1.offset || newCords.lng < oldCords.lng - constants_1.offset)) {
@@ -99,12 +98,9 @@ var GoogleMap = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log("search started");
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
+                        _a.trys.push([0, 2, , 3]);
                         return [4 /*yield*/, this.updateMap.renderNew(latitude, longitude)];
-                    case 2:
+                    case 1:
                         data = _a.sent();
                         this.setState({
                             items: data.map(function (item) { return ({
@@ -115,12 +111,12 @@ var GoogleMap = /** @class */ (function (_super) {
                             }); }),
                             coordinates: { lat: latitude, lng: longitude }
                         });
-                        return [3 /*break*/, 4];
-                    case 3:
+                        return [3 /*break*/, 3];
+                    case 2:
                         e_1 = _a.sent();
                         console.error("Couldn't updateMap", e_1);
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
                 }
             });
         });

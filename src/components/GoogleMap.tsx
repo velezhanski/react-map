@@ -47,7 +47,6 @@ class GoogleMap extends React.Component<any, any> {
   }
 
   centerMoved(mapProps, map) {
-    console.log("triggered")
     var newCords = {lat: map.getCenter().lat(), lng: map.getCenter().lng()}
     var oldCords = {lat: this.state.coordinates.lat, lng: this.state.coordinates.lng}
 
@@ -57,7 +56,6 @@ class GoogleMap extends React.Component<any, any> {
   }
 
   async initiateSearch(latitude, longitude) {
-    console.log("search started")
     try {
         const data = await this.updateMap.renderNew(latitude, longitude);
           this.setState({

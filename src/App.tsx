@@ -27,7 +27,6 @@ export default class App extends React.Component<any, any> {
   }   
   
   rerender(latitude, longitude) {
-    console.log(latitude, longitude)
     this.googleMap.initiateSearch(latitude,longitude)
   }
 }

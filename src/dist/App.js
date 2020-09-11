@@ -32,7 +32,6 @@ var App = /** @class */ (function (_super) {
             react_1["default"].createElement(GoogleMap_1["default"], { onRef: function (ref) { return (_this.googleMap = ref); } })));
     };
     App.prototype.rerender = function (latitude, longitude) {
-        console.log(latitude, longitude);
         this.googleMap.initiateSearch(latitude, longitude);
     };
     return App;
