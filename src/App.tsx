@@ -29,7 +29,7 @@ class App extends Component<any, any> {
             onFormSubmitted={this.initiateSearch}
         />
 
-        <Map minZoom={14} style={mapStyles} zoom={14} onDragend={this.centerMoved} center={this.state.sampleLocation} initialCenter={this.state.sampleLocation} google={this.props.google}   
+        <Map minZoom={11} style={mapStyles} zoom={14} onDragend={this.centerMoved} center={this.state.sampleLocation} initialCenter={this.state.sampleLocation} google={this.props.google}   
         onReady={(mapProps, map) => {
           this.setState({ map: map as google.maps.Map})
         }}>
