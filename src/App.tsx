@@ -34,7 +34,6 @@ class App extends Component<any, any> {
           this.setState({ map: map as google.maps.Map})
         }}>
   
-
           {this.state.items.map(hit =>
             <Marker
               key={hit.id}
@@ -44,15 +43,15 @@ class App extends Component<any, any> {
             />
           )}
             
-              <InfoWindow
-                google={this.props.google}
-                map={this.state.map as google.maps.Map}
-                marker={this.state.activeMarker}
-                visible={this.state.showingInfoWindow}>
-                  <div>
-                    <h1>{this.state.selectedPlace.title}</h1>
-                  </div>
-              </InfoWindow>
+          <InfoWindow
+            google={this.props.google}
+            map={this.state.map as google.maps.Map}
+            marker={this.state.activeMarker}
+            visible={this.state.showingInfoWindow}>
+            <div>
+              <h1>{this.state.selectedPlace.title}</h1>
+            </div>
+          </InfoWindow>
         </Map>
       </div>
     );
@@ -95,7 +94,6 @@ class App extends Component<any, any> {
   componentDidMount() {
     this.initiateSearch(49.246292, -123.116226)
   }
-
 }
 
 export default GoogleApiWrapper({

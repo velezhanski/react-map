@@ -14,7 +14,6 @@ var __extends = (this && this.__extends) || (function () {
 })();
 exports.__esModule = true;
 var react_1 = require("react");
-var google_maps_react_velez_1 = require("google-maps-react-velez");
 var MapData = /** @class */ (function (_super) {
     __extends(MapData, _super);
     function MapData(props) {
@@ -28,20 +27,15 @@ var MapData = /** @class */ (function (_super) {
         };
         _this.state = {
             sampleLocation: { lat: 49.246292, lng: -123.116226 },
-            map: {}
+            map: {},
+            showingInfoWindow: false,
+            activeMarker: {},
+            selectedPlace: {}
         };
         return _this;
     }
     MapData.prototype.render = function () {
-        var _this = this;
-        return (react_1["default"].createElement("div", null,
-            this.state.items.map(function (hit) {
-                var _a, _b;
-                return react_1["default"].createElement(google_maps_react_velez_1.Marker, { key: hit.id, onClick: _this.onMarkerClick, title: (_b = (_a = hit.player) === null || _a === void 0 ? void 0 : _a.name) !== null && _b !== void 0 ? _b : 'No Name', position: { lat: hit.latitude, lng: hit.longitude } });
-            }),
-            react_1["default"].createElement(google_maps_react_velez_1.InfoWindow, { google: this.props.google, map: this.state.map, marker: this.state.activeMarker, visible: this.state.showingInfoWindow },
-                react_1["default"].createElement("div", null,
-                    react_1["default"].createElement("h1", null, this.state.selectedPlace.title)))));
+        return;
     };
     return MapData;
 }(react_1["default"].Component));
