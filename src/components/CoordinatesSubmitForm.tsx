@@ -50,7 +50,6 @@ export default class CoordinatesSubmitForm extends React.Component<any, ICoordin
     if (this.state.latitude === 0 || this.state.longitude === 0) {
       return;
     }
-
-  this.props.onFormSubmitted(this.state.latitude, this.state.longitude)
+    this.props.onFormSubmitted(this.state.latitude, this.state.longitude)
   }
 }
