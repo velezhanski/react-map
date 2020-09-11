@@ -11,25 +11,27 @@ export default class CoordinatesSubmitForm extends React.Component<any, ICoordin
   }
 
   render() {
-      return <form onSubmit={this.handleFormSubmission}>
-                <input 
-                type="text" 
-                name="latitude" 
-                placeholder="Latitude" 
-                value={ this.state.latitude}
-                onChange={ this.handleLatChange } 
-              />
-              
-              <input 
-                type="text" 
-                name="longitude" 
-                placeholder="Longitude"
-                value={ this.state.longitude } 
-                onChange={ this.handleLngChange } 
-              />
-              
-              <button value="Send" type="submit">Update</button>
+    return (
+      <form onSubmit={this.handleFormSubmission}>
+          <input 
+          type="text" 
+          name="latitude" 
+          placeholder="Latitude" 
+          value={ this.state.latitude}
+          onChange={ this.handleLatChange } 
+        />
+        
+        <input 
+          type="text" 
+          name="longitude" 
+          placeholder="Longitude"
+          value={ this.state.longitude } 
+          onChange={ this.handleLngChange } 
+        />
+        
+        <button value="Send" type="submit">Update</button>
       </form>
+    )
   }
 
   handleLatChange({ target }) {
@@ -50,7 +52,6 @@ export default class CoordinatesSubmitForm extends React.Component<any, ICoordin
     if (this.state.latitude === 0 || this.state.longitude === 0) {
       return;
     }
-
-  this.props.onFormSubmitted(this.state.latitude, this.state.longitude)
+    this.props.onFormSubmitted(this.state.latitude, this.state.longitude)
   }
 }

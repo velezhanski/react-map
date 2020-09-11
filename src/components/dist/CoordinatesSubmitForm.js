@@ -25,10 +25,10 @@ var CoordinatesSubmitForm = /** @class */ (function (_super) {
         return _this;
     }
     CoordinatesSubmitForm.prototype.render = function () {
-        return react_1["default"].createElement("form", { onSubmit: this.handleFormSubmission },
+        return (react_1["default"].createElement("form", { onSubmit: this.handleFormSubmission },
             react_1["default"].createElement("input", { type: "text", name: "latitude", placeholder: "Latitude", value: this.state.latitude, onChange: this.handleLatChange }),
             react_1["default"].createElement("input", { type: "text", name: "longitude", placeholder: "Longitude", value: this.state.longitude, onChange: this.handleLngChange }),
-            react_1["default"].createElement("button", { value: "Send", type: "submit" }, "Update"));
+            react_1["default"].createElement("button", { value: "Send", type: "submit" }, "Update")));
     };
     CoordinatesSubmitForm.prototype.handleLatChange = function (_a) {
         var target = _a.target;
