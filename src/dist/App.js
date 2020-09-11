@@ -51,9 +51,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 var react_1 = require("react");
 var google_maps_react_velez_1 = require("google-maps-react-velez");
-var App_1 = require("./styles/App");
 var CoordinatesSubmitForm_1 = require("./components/CoordinatesSubmitForm");
 var UpdateMap_1 = require("./api/UpdateMap");
+var GoogleMap_1 = require("./components/GoogleMap");
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
     function App(props) {
@@ -82,16 +82,9 @@ var App = /** @class */ (function (_super) {
         var _this = this;
         return (react_1["default"].createElement("div", null,
             react_1["default"].createElement(CoordinatesSubmitForm_1["default"], { onFormSubmitted: this.initiateSearch }),
-            react_1["default"].createElement(google_maps_react_velez_1.Map, { minZoom: 11, style: App_1.mapStyles, zoom: 14, onDragend: this.centerMoved, center: this.state.sampleLocation, initialCenter: this.state.sampleLocation, google: this.props.google, onReady: function (mapProps, map) {
+            react_1["default"].createElement(GoogleMap_1["default"], { onDragend: this.centerMoved, google: this.props.google, onReady: function (mapProps, map) {
                     _this.setState({ map: map });
-                } },
-                this.state.items.map(function (hit) {
-                    var _a, _b;
-                    return react_1["default"].createElement(google_maps_react_velez_1.Marker, { key: hit.id, onClick: _this.onMarkerClick, title: (_b = (_a = hit.player) === null || _a === void 0 ? void 0 : _a.name) !== null && _b !== void 0 ? _b : 'No Name', position: { lat: hit.latitude, lng: hit.longitude } });
-                }),
-                react_1["default"].createElement(google_maps_react_velez_1.InfoWindow, { google: this.props.google, map: this.state.map, marker: this.state.activeMarker, visible: this.state.showingInfoWindow },
-                    react_1["default"].createElement("div", null,
-                        react_1["default"].createElement("h1", null, this.state.selectedPlace.title))))));
+                } })));
     };
     App.prototype.initiateSearch = function (latitude, longitude) {
         return __awaiter(this, void 0, void 0, function () {
@@ -123,6 +116,7 @@ var App = /** @class */ (function (_super) {
         });
     };
     App.prototype.centerMoved = function (mapProps, map) {
+        console.log("triggered");
         var newCords = { lat: map.getCenter().lat(), lng: map.getCenter().lng() };
         var oldCords = { lat: this.state.sampleLocation.lat, lng: this.state.sampleLocation.lng };
         var offset = 0.02;

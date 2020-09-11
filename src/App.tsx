@@ -3,6 +3,7 @@ import {Map, Marker, GoogleApiWrapper, InfoWindow} from 'google-maps-react-velez
 import {mapStyles} from './styles/App';
 import CoordinatesSubmitForm from "./components/CoordinatesSubmitForm";
 import {UpdateMap} from "./api/UpdateMap";
+import GoogleMap from "./components/GoogleMap";
 
 class App extends Component<any, any> {
   updateMap: UpdateMap;
@@ -29,7 +30,15 @@ class App extends Component<any, any> {
             onFormSubmitted={this.initiateSearch}
         />
 
-        <Map minZoom={11} style={mapStyles} zoom={14} onDragend={this.centerMoved} center={this.state.sampleLocation} initialCenter={this.state.sampleLocation} google={this.props.google}   
+        <GoogleMap 
+        onDragend={this.centerMoved} google={this.props.google}   
+        onReady={(mapProps, map) => {
+          this.setState({ map: map as google.maps.Map})
+        }}
+        
+        />
+
+        {/* <Map minZoom={11} style={mapStyles} zoom={14} onDragend={this.centerMoved} center={this.state.sampleLocation} initialCenter={this.state.sampleLocation} google={this.props.google}   
         onReady={(mapProps, map) => {
           this.setState({ map: map as google.maps.Map})
         }}>
@@ -52,7 +61,7 @@ class App extends Component<any, any> {
               <h1>{this.state.selectedPlace.title}</h1>
             </div>
           </InfoWindow>
-        </Map>
+        </Map> */}
       </div>
     );
   }
@@ -75,6 +84,7 @@ class App extends Component<any, any> {
   }
 
   centerMoved(mapProps, map) {
+    console.log("triggered")
     var newCords = {lat: map.getCenter().lat(), lng: map.getCenter().lng()}
     var oldCords = {lat: this.state.sampleLocation.lat, lng: this.state.sampleLocation.lng}
     var offset = 0.02
