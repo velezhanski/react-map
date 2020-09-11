@@ -10,7 +10,6 @@ export default class App extends React.Component<any, any> {
     super(props);
     this.rerender = this.rerender.bind(this);
     this.updateMap = new UpdateMap();
-    this.googleMap = React.createRef();
   }
 
   render() {
@@ -21,7 +20,7 @@ export default class App extends React.Component<any, any> {
         />
 
         <GoogleMap
-        ref={this.googleMap}
+        onRef={ref => (this.googleMap = ref)}
         />
       </div>
     );
@@ -29,6 +28,6 @@ export default class App extends React.Component<any, any> {
   
   rerender(latitude, longitude) {
     console.log(latitude, longitude)
-    this.googleMap.current.initiateSearch(latitude,longitude)
+    this.googleMap.initiateSearch(latitude,longitude)
   }
 }

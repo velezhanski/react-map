@@ -76,6 +76,7 @@ class GoogleMap extends React.Component<any, any> {
 
   componentDidMount() {
     this.initiateSearch(initialCords.lat, initialCords.lng)
+    this.props.onRef(this)
   }
 
   onMarkerClick = (props: any, marker: any, e: any) =>

@@ -127,6 +127,7 @@ var GoogleMap = /** @class */ (function (_super) {
     };
     GoogleMap.prototype.componentDidMount = function () {
         this.initiateSearch(constants_1.initialCords.lat, constants_1.initialCords.lng);
+        this.props.onRef(this);
     };
     return GoogleMap;
 }(react_1["default"].Component));

@@ -23,17 +23,17 @@ var App = /** @class */ (function (_super) {
         var _this = _super.call(this, props) || this;
         _this.rerender = _this.rerender.bind(_this);
         _this.updateMap = new UpdateMap_1.UpdateMap();
-        _this.googleMap = react_1["default"].createRef();
         return _this;
     }
     App.prototype.render = function () {
+        var _this = this;
         return (react_1["default"].createElement("div", null,
             react_1["default"].createElement(CoordinatesSubmitForm_1["default"], { onFormSubmitted: this.rerender }),
-            react_1["default"].createElement(GoogleMap_1["default"], { ref: this.googleMap })));
+            react_1["default"].createElement(GoogleMap_1["default"], { onRef: function (ref) { return (_this.googleMap = ref); } })));
     };
     App.prototype.rerender = function (latitude, longitude) {
         console.log(latitude, longitude);
-        this.googleMap.current.initiateSearch(latitude, longitude);
+        this.googleMap.initiateSearch(latitude, longitude);
     };
     return App;
 }(react_1["default"].Component));
