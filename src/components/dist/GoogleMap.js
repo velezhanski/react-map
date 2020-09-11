@@ -53,22 +53,19 @@ var react_1 = require("react");
 var google_maps_react_velez_1 = require("google-maps-react-velez");
 var App_1 = require("../styles/App");
 var UpdateMap_1 = require("../api/UpdateMap");
+var constants_1 = require("../utils/constants");
 var GoogleMap = /** @class */ (function (_super) {
     __extends(GoogleMap, _super);
     function GoogleMap(props) {
         var _this = _super.call(this, props) || this;
         _this.onMarkerClick = function (props, marker, e) {
-            return _this.setState({
-                selectedPlace: props,
-                activeMarker: marker,
-                showingInfoWindow: true
-            });
+            return _this.setState({ selectedPlace: props, activeMarker: marker, showingInfoWindow: true });
         };
         _this.updateMap = new UpdateMap_1.UpdateMap();
         _this.centerMoved = _this.centerMoved.bind(_this);
         _this.onMarkerClick = _this.onMarkerClick.bind(_this);
         _this.state = {
-            sampleLocation: { lat: 49.246292, lng: -123.116226 },
+            coordinates: constants_1.initialCords,
             showingInfoWindow: false,
             activeMarker: {},
             selectedPlace: {},
@@ -79,7 +76,7 @@ var GoogleMap = /** @class */ (function (_super) {
     }
     GoogleMap.prototype.render = function () {
         var _this = this;
-        return react_1["default"].createElement(google_maps_react_velez_1.Map, { minZoom: 11, style: App_1.mapStyles, zoom: 14, onDragend: this.centerMoved, center: this.state.sampleLocation, initialCenter: this.state.sampleLocation, google: this.props.google },
+        return react_1["default"].createElement(google_maps_react_velez_1.Map, { minZoom: 11, style: App_1.mapStyles, zoom: 14, onDragend: this.centerMoved, center: this.state.coordinates, initialCenter: this.state.coordinates, google: this.props.google },
             this.state.items.map(function (hit) {
                 var _a, _b;
                 return react_1["default"].createElement(google_maps_react_velez_1.Marker, { key: hit.id, onClick: _this.onMarkerClick, title: (_b = (_a = hit.player) === null || _a === void 0 ? void 0 : _a.name) !== null && _b !== void 0 ? _b : 'No Name', position: { lat: hit.latitude, lng: hit.longitude } });
@@ -91,9 +88,8 @@ var GoogleMap = /** @class */ (function (_super) {
     GoogleMap.prototype.centerMoved = function (mapProps, map) {
         console.log("triggered");
         var newCords = { lat: map.getCenter().lat(), lng: map.getCenter().lng() };
-        var oldCords = { lat: this.state.sampleLocation.lat, lng: this.state.sampleLocation.lng };
-        var offset = 0.02;
-        if ((newCords.lat > oldCords.lat + offset || newCords.lat < oldCords.lat - offset) || (newCords.lng > oldCords.lng + offset || newCords.lng < oldCords.lng - offset)) {
+        var oldCords = { lat: this.state.coordinates.lat, lng: this.state.coordinates.lng };
+        if ((newCords.lat > oldCords.lat + constants_1.offset || newCords.lat < oldCords.lat - constants_1.offset) || (newCords.lng > oldCords.lng + constants_1.offset || newCords.lng < oldCords.lng - constants_1.offset)) {
             this.initiateSearch(newCords.lat, newCords.lng);
         }
     };
@@ -117,7 +113,7 @@ var GoogleMap = /** @class */ (function (_super) {
                                 player: item.player,
                                 id: item.id
                             }); }),
-                            sampleLocation: { lat: latitude, lng: longitude }
+                            coordinates: { lat: latitude, lng: longitude }
                         });
                         return [3 /*break*/, 4];
                     case 3:
@@ -130,7 +126,7 @@ var GoogleMap = /** @class */ (function (_super) {
         });
     };
     GoogleMap.prototype.componentDidMount = function () {
-        this.initiateSearch(49.246292, -123.116226);
+        this.initiateSearch(constants_1.initialCords.lat, constants_1.initialCords.lng);
     };
     return GoogleMap;
 }(react_1["default"].Component));

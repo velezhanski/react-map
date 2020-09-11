@@ -8,6 +8,7 @@ export default class App extends React.Component<any, any> {
   googleMap: any;
   constructor(props: any) {
     super(props);
+    this.rerender = this.rerender.bind(this);
     this.updateMap = new UpdateMap();
     this.googleMap = React.createRef();
   }
@@ -16,7 +17,7 @@ export default class App extends React.Component<any, any> {
     return (
       <div>
         <CoordinatesSubmitForm
-            onFormSubmitted={this.googleMap.initiateSearch}
+            onFormSubmitted={this.rerender}
         />
 
         <GoogleMap
@@ -24,5 +25,10 @@ export default class App extends React.Component<any, any> {
         />
       </div>
     );
-  }    
+  }   
+  
+  rerender(latitude, longitude) {
+    console.log(latitude, longitude)
+    this.googleMap.current.initiateSearch(latitude,longitude)
+  }
 }

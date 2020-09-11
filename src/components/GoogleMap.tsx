@@ -2,6 +2,7 @@ import React from 'react';
 import {Map, Marker, InfoWindow, GoogleApiWrapper} from 'google-maps-react-velez';
 import {mapStyles} from '../styles/App';
 import {UpdateMap} from '../api/UpdateMap'
+import {offset, initialCords} from '../utils/constants'
 
 class GoogleMap extends React.Component<any, any> {
   updateMap: UpdateMap;
@@ -11,7 +12,7 @@ class GoogleMap extends React.Component<any, any> {
       this.centerMoved = this.centerMoved.bind(this);
       this.onMarkerClick = this.onMarkerClick.bind(this);
       this.state = {      
-        sampleLocation: {lat: 49.246292, lng: -123.116226},
+        coordinates: initialCords,
         showingInfoWindow: false,
         activeMarker: {},
         selectedPlace: {},
@@ -21,7 +22,7 @@ class GoogleMap extends React.Component<any, any> {
   }
 
   render() {
-      return <Map minZoom={11} style={mapStyles} zoom={14} onDragend={this.centerMoved} center={this.state.sampleLocation} initialCenter={this.state.sampleLocation} google={this.props.google}>
+      return <Map minZoom={11} style={mapStyles} zoom={14} onDragend={this.centerMoved} center={this.state.coordinates} initialCenter={this.state.coordinates} google={this.props.google}>
   
           {this.state.items.map(hit =>
             <Marker
@@ -48,8 +49,7 @@ class GoogleMap extends React.Component<any, any> {
   centerMoved(mapProps, map) {
     console.log("triggered")
     var newCords = {lat: map.getCenter().lat(), lng: map.getCenter().lng()}
-    var oldCords = {lat: this.state.sampleLocation.lat, lng: this.state.sampleLocation.lng}
-    var offset = 0.02
+    var oldCords = {lat: this.state.coordinates.lat, lng: this.state.coordinates.lng}
 
     if ((newCords.lat > oldCords.lat + offset || newCords.lat < oldCords.lat - offset) || (newCords.lng > oldCords.lng + offset || newCords.lng < oldCords.lng - offset )) {
       this.initiateSearch(newCords.lat, newCords.lng);
@@ -67,7 +67,7 @@ class GoogleMap extends React.Component<any, any> {
               player: item.player,
               id: item.id
             })),
-            sampleLocation: {lat: latitude, lng: longitude}
+            coordinates: {lat: latitude, lng: longitude}
           });
     } catch (e) {
         console.error("Couldn't updateMap", e)
@@ -75,16 +75,11 @@ class GoogleMap extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    this.initiateSearch(49.246292, -123.116226)
+    this.initiateSearch(initialCords.lat, initialCords.lng)
   }
 
   onMarkerClick = (props: any, marker: any, e: any) =>
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
-    });
-
+    this.setState({selectedPlace: props, activeMarker: marker, showingInfoWindow: true});
 }
 
 export default GoogleApiWrapper({
